@@ -81,25 +81,28 @@ struct ContentView: View {
                         .resizable()
                         .frame(width: tokenWidth, height: tokenHeight)
                         .position(game.boardPoint)
-                        .offset(y: movingToken ? -10 : 0)
-                        .animation(.linear(duration: 0.5 / moveAnimationSpeed), value: game.boardPosition)
-//                        .animation(.easeOut(duration: 0.5 / moveAnimationSpeed), value: game.boardPosition)
-//                        .animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.5), value: game.boardPosition)
-                    //                        .animation(Animation.interpolatingSpring(stiffness: 170,
-                    //                                                                 damping: 5), value: game.boardPosition)
+//                        .offset(y: movingToken ? -10 : 0)
+//                        .animation(.linear(duration: 0.5 / moveAnimationSpeed), value: game.boardPosition)
+//                        .animation(.easeIn(duration: 0.5 / moveAnimationSpeed), value: game.boardPosition)
+                        .animation(.spring(response: 0.25, dampingFraction: 0.75, blendDuration: 0.5), value: game.boardPosition)
+//                        .animation(.spring(response: 0.55, dampingFraction: 0.825, blendDuration: 0.25), value: game.boardPosition)
+//                        .animation(.interactiveSpring(response: 0.15, dampingFraction: 0.86, blendDuration: 0.25), value: game.boardPosition)
+//                        .animation(.interpolatingSpring(mass: 1.0, stiffness: 0.825, damping: 0, initialVelocity: 0.0), value: game.boardPosition)
                         .foregroundColor(color)
                         .zIndex(1)
                 }
                 .onReceive(timer) { _ in
                     withAnimation {
                         if game.boardPosition < game.endPosition {
-                            movingToken = true
+                            game.boardPosition += 1
                             
-                            let delay = Int(moveAnimationSpeed * 1000)
-                            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delay) ) {
-                                game.boardPosition += 1
-                                movingToken = false
-                            }
+//                            movingToken = true
+//
+//                            let delay = Int(moveAnimationSpeed * 1000)
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delay) ) {
+//                                game.boardPosition += 1
+//                                movingToken = false
+//                            }
                         }
                     }
                 }
